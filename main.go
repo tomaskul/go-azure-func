@@ -7,6 +7,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", handleRoute)
+	http.ListenAndServe(":3000", nil)
 }
 
 func handleRoute(w http.ResponseWriter, r *http.Request) {

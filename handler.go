@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -18,10 +18,11 @@ func main() {
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	name := r.URL.Query().Get("name")
-	if name != "" {
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method == "GET" {
 		w.Write([]byte("This HTTP trigger function executed successfully."))
 	} else {
-		w.Write([]byte(fmt.Sprintf("Hello, %s. This HTTP triggered function executed successfully.", name)))
+		body, _ := io.ReadAll(r.Body)
+		w.Write(body)
 	}
 }
